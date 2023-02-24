@@ -122,6 +122,7 @@ namespace Lista2
             try
             {
                 int x, y, t;
+                bool primeiro = true;
                 Console.Write("Informe o valor do início do intervalo: ");
                 x = int.Parse(Cin());
                 Console.Write("Informe o valor do final do intervalo: ");
@@ -133,11 +134,12 @@ namespace Lista2
                     t = i % 7;
                     if (t == 3 || t == 5)
                     {
+                        if (i > x && !primeiro) Console.Write(", ");
                         Console.Write(i);
-                        if (i < y) Console.Write(", ");
+                        primeiro = false;
                     }
                 }
-                Console.Write("]\n\n\n");
+                Console.Write(" ]\n\n\n");
             }
             catch
             {
