@@ -33,29 +33,40 @@ namespace Lista2
             Cout("\n\n");
             try
             {
-                int soma = 0, maior = 0, menor = 0, count = 172, soma_pares_menores_que_100 = 0, count_pares_menores_que_100 = 0, n = 0;
+                double soma = 0, maior = 0, menor = 0, count = 172, soma_pares_menores_que_100 = 0, count_pares_menores_que_100 = 0, n = 0, media_pares = 0;
                 Random random = new Random();
+                Console.Write("\nValores:\n[ ");
                 for (int i = 0; i < count; i++) {
                     n = random.Next(23, 9568);
                     if (n < menor || i == 0) menor = n;
                     if (n > maior || i == 0) maior = n;
                     soma += n;
-                    if (n < 100 && n %2 == 0)
+                    if (n < 100 && n % 2 == 0)
                     {
                         soma_pares_menores_que_100 += n;
                         count_pares_menores_que_100++;
                     }
-
-                    Console.Write(n + ", ");
+                    Console.Write(n);
+                    if (i < count - 1) Console.Write(", ");
                 }
-
-                double media = (double)soma / (double)count;
-                double media_pares = (double) soma_pares_menores_que_100 / (double) count_pares_menores_que_100;
-
+                Cout("]\n\n");
+                Cout("Sobre todos os valores: ");
+                Cout("Maior valor: " + maior + " .");
+                Cout("Menor valor: " + menor + " .");
+                media_pares = soma_pares_menores_que_100 / count_pares_menores_que_100;
+                if (!Double.IsNaN(media_pares))
+                {
+                    Cout("Média dos valores pares menores que 100: " + media_pares.ToString("N2") + " .");
+                }
+                else
+                {
+                    if (!(count_pares_menores_que_100 > 0)) Cout("Não foi possível calcular a média dos valores pares menores que 100 pois não há valores pares menores que 100.");
+                    else Cout("Não foi possível calcular a média.");
+                }
             }
             catch
             {
-                Cout("Entrada Inválida\n\n");
+                Cout("Erro na execução do exercício 1\n\n");
             }
             return;
         }
@@ -67,6 +78,33 @@ namespace Lista2
             Cout("\n\n");
             try
             {
+                double soma = 0, n = 0, count = 0;
+                int padding = 0;
+                string texto = "\nValor: ";
+                while (n >= 0)
+                {
+                    Console.Write(texto);
+                    n = Convert.ToDouble(Console.ReadLine());
+                    if (n >= 0) { 
+                        count++;
+                        soma += n;
+                        padding = n.ToString().Length;
+                        Console.SetCursorPosition(texto.Length + padding, Console.CursorTop - 1);
+                        for (int i = 0; i <= 40 - padding; i++)
+                        {
+                            Console.Write(" ");
+                        }
+                        Console.Write(" ... média parcial: " + (soma / count).ToString("N2"));
+                    }
+                    else
+                    {
+                        Console.SetCursorPosition(0, Console.CursorTop - 1);
+                        Console.Write("                                                                                                              \n");
+                    }
+
+
+                }
+                Cout("\nMédia dos valores inseridos = " + (soma / count).ToString("N2") + "\n\n");
 
             }
             catch
@@ -79,11 +117,27 @@ namespace Lista2
         static void Exercicio3()
         {
             Cout("Exercício 3\n\n");
-            Cout("Escreva um programa que mostre os números que possuem resto igual a 3 ou 5, quando divididos\r\npor 7. Considere o intervalo entre X e Y, incluindo os extremos. Os valores das variáveis X e Y são\r\ninformados pelo usuário.");
+            Cout("Escreva um programa que mostre os números que possuem resto igual a 3 ou 5, quando divididos por 7. Considere o intervalo entre X e Y, incluindo os extremos. Os valores das variáveis X e Y são informados pelo usuário.");
             Cout("\n\n");
             try
             {
-
+                int x, y, t;
+                Console.Write("Informe o valor do início do intervalo: ");
+                x = int.Parse(Cin());
+                Console.Write("Informe o valor do final do intervalo: ");
+                y = int.Parse(Cin());
+                Cout("Valores válidos: ");
+                Console.Write("[ ");
+                for (int i = x; i <= y; i++)
+                {
+                    t = i % 7;
+                    if (t == 3 || t == 5)
+                    {
+                        Console.Write(i);
+                        if (i < y) Console.Write(", ");
+                    }
+                }
+                Console.Write("]\n\n\n");
             }
             catch
             {
@@ -95,15 +149,36 @@ namespace Lista2
         static void Exercicio4()
         {
             Cout("Exercício 4\n\n");
-            Cout("Faça um programa que leia um número P positivo e mostre na tela os P\r\n\r\n3 primeiros números pares\r\n\r\nque são ao mesmo tempo divisíveis por 4, mas não por 6.");
+            Cout("Faça um programa que leia um número P positivo e mostre na tela os P^3 primeiros números pares que são ao mesmo tempo divisíveis por 4, mas não por 6.");
             Cout("\n\n");
             try
             {
+                int p, p3;
+                Console.Write("Informe o valor de P: ");
+                p = int.Parse(Cin());
+                p3 = p*p*p; //  p3 =  Convert.ToInt32((Math.Pow(Convert.ToDouble(p),3.0)));
+                if (p > 0) {
+                    Console.SetCursorPosition(p.ToString().Length, Console.CursorTop - 1);
+                    Console.Write("    ... intervalo de 0 a " + p3 + "\n\n");
+                    Console.Write("\nvalores: [ ");
+                    for (int i = 0; i <= p3; i += 4)
+                    {
+                        if(! (i%6 == 0)){
+                            Console.Write(i);
+                            if (i < p3 - 4) Console.Write(", ");
+                        }
+                    }
+                    Console.Write(" ].\n\n");
+                }
+                else
+                {
+                    throw new Exception("valor não positivo");
+                }
 
             }
-            catch
+            catch(Exception er)
             {
-                Cout("Entrada Inválida\n\n");
+                Cout("Entrada Inválida: " + er.Message + "\n\n");
             }
             return;
         }
@@ -111,10 +186,28 @@ namespace Lista2
         static void Exercicio5()
         {
             Cout("Exercício 5\n\n");
-            Cout("Crie um programa que seja capaz de apresentar uma figura similar à apresentada abaixo. O usuário\r\nentrará somente com o número de linhas e o caractere a ser utilizado na apresentação final. No\r\nexemplo, o número de linhas foi 5 e o caractere foi o asterisco.\n*\r\n**\r\n***\r\n****\r\n*****");
+            Cout("Crie um programa que seja capaz de apresentar uma figura similar à apresentada abaixo. O usuário entrará somente com o número de linhas e o caractere a ser utilizado na apresentação final. No exemplo, o número de linhas foi 5 e o caractere foi o asterisco: \n*\r\n**\r\n***\r\n****\r\n*****");
             Cout("\n\n");
             try
             {
+                Console.Write("Informe o número de linhas :");
+                int linhas = Convert.ToInt32(Cin());
+                Console.Write("Informe o caracter escolhido :");
+                char caracter = Cin()[0];
+                string linha;
+                Cout("\n");
+
+                for (int i = 0 ; i < linhas; i++)
+                {
+                    linha = "";
+                    for (int j = linhas - i - 1 ; j < linhas; j++)
+                    {
+                        linha += caracter;
+                    }
+                    Cout(linha);
+                }
+
+                Cout("\n\n");
 
             }
             catch
@@ -127,11 +220,31 @@ namespace Lista2
         static void Exercicio6()
         {
             Cout("Exercício 6\n\n");
-            Cout("Crie um programa que seja capaz de apresentar uma figura similar à apresentada abaixo. O usuário\r\nentrará somente com o número de linhas e o caractere a ser utilizado na apresentação final. No\r\nexemplo, o número de linhas foi 5 e o caractere foi o asterisco.\n*\r\n***\r\n*****\r\n*******\r\n*********");
+            Cout("Crie um programa que seja capaz de apresentar uma figura similar à apresentada abaixo. O usuário entrará somente com o número de linhas e o caractere a ser utilizado na apresentação final. No exemplo, o número de linhas foi 5 e o caractere foi o asterisco.\n   *\n  ***\n *****\n*******\n\n");
             Cout("\n\n");
             try
             {
+                Console.Write("Informe o número de linhas :");
+                int linhas = Convert.ToInt32(Cin());
+                Console.Write("Informe o caracter escolhido :");
+                char caracter = Cin()[0];
+                string linha;
+                Cout("\n");
 
+                for (int i = 0; i < linhas; i++)
+                {
+                    linha = "";
+                    for (int k = 0; k <= linhas - i - 2; k++)
+                    {
+                        linha += " ";
+                    }
+                    for (int j = 0; j < (i+1)*2-1; j++)
+                    {                       
+                        linha += caracter;
+                    }
+                    Cout(linha);
+                }
+                Cout("\n\n");
             }
             catch
             {
@@ -165,6 +278,10 @@ namespace Lista2
                         System.Console.Clear();
                         Cout("Opção Inválida\n\n\n");
                         continue;
+                    }
+                    else
+                    {
+                        System.Console.Clear();
                     }
                 }
                 catch
