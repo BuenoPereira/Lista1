@@ -1,0 +1,8 @@
+C:\Users\CJ3001725\Desktop\C#\lista1\Lista1\bin\Debug\Lista1.exe.config
+C:\Users\CJ3001725\Desktop\C#\lista1\Lista1\bin\Debug\Lista1.exe
+C:\Users\CJ3001725\Desktop\C#\lista1\Lista1\bin\Debug\Lista1.pdb
+C:\Users\CJ3001725\Desktop\C#\lista1\Lista1\obj\Debug\Lista1.csproj.AssemblyReference.cache
+C:\Users\CJ3001725\Desktop\C#\lista1\Lista1\obj\Debug\Lista1.csproj.SuggestedBindingRedirects.cache
+C:\Users\CJ3001725\Desktop\C#\lista1\Lista1\obj\Debug\Lista1.csproj.CoreCompileInputs.cache
+C:\Users\CJ3001725\Desktop\C#\lista1\Lista1\obj\Debug\Lista1.exe
+C:\Users\CJ3001725\Desktop\C#\lista1\Lista1\obj\Debug\Lista1.pdb
