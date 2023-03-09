@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Collections.Specialized;
 
-
-
-namespace Lista2
+namespace Lista3
 {
-
-    public static class Program
+    internal class Program
     {
-
         static string Cin(string texto = "")
         {
-            System.Console.WriteLine(texto);
+            System.Console.Write(texto);
             texto = System.Console.ReadLine();
             return texto;
         }
@@ -29,260 +25,394 @@ namespace Lista2
         static void Exercicio1()
         {
             Cout("Exercício 1\n\n");
-            Cout("Escreva um programa que obtenha 172 valores inteiros no intervalo [23, 9568], encontre o maior e\r\no menor entre eles e, ao final, mostre a média aritmética de todos os valores pares e menor que 100,\r\no menor e o maior número encontrado.");
+            Cout("1. Crie um programa que define um vetor de tamanho N, faz a leitura dos N" +
+                "números float e apresenta, com base nos números digitados, " +
+                "o menor número, o maior número e a média aritmética dos números.");
             Cout("\n\n");
             try
             {
-                double soma = 0, maior = 0, menor = 0, count = 172, soma_pares_menores_que_100 = 0, count_pares_menores_que_100 = 0, n = 0, media_pares = 0;
-                Random random = new Random();
-                Console.Write("\nValores:\n[ ");
-                for (int i = 0; i < count; i++) {
-                    n = random.Next(23, 9568);
-                    if (n < menor || i == 0) menor = n;
-                    if (n > maior || i == 0) maior = n;
-                    soma += n;
-                    if (n < 100 && n % 2 == 0)
-                    {
-                        soma_pares_menores_que_100 += n;
-                        count_pares_menores_que_100++;
-                    }
-                    Console.Write(n);
-                    if (i < count - 1) Console.Write(", ");
-                }
-                Cout("]\n\n");
-                Cout("Sobre todos os valores: ");
-                Cout("Maior valor: " + maior + " .");
-                Cout("Menor valor: " + menor + " .");
-                media_pares = soma_pares_menores_que_100 / count_pares_menores_que_100;
-                if (!Double.IsNaN(media_pares))
+                Cout("Informe o valor de N - quantidade de números a serem inseridos no vetor: ");
+                int N = int.Parse(Console.ReadLine());
+                if (N < 0) throw new Exception(" vetor de tamanho zero ou negativo");
+                float maior, menor, media, soma = 0;
+                float[] v = new float[N];
+                for (int i = 0; i < N; i++)
                 {
-                    Cout("Média dos valores pares menores que 100: " + media_pares.ToString("N2") + " .");
+                    Console.Write($"Entre o valor {i + 1}:      ");
+                    v[i] = float.Parse(Console.ReadLine());
                 }
-                else
+                menor = maior = v[0];
+                foreach (float k in v)
                 {
-                    if (!(count_pares_menores_que_100 > 0)) Cout("Não foi possível calcular a média dos valores pares menores que 100 pois não há valores pares menores que 100.");
-                    else Cout("Não foi possível calcular a média.");
+                    if (k > maior) maior = k;
+                    if (k < menor) menor = k;
+                    soma += k;
                 }
+                media = soma / N;
+                Cout("\nO menor número é " + menor + " .");
+                Cout("O maior número é " + maior + " .");
+                Cout("A média dos valores é " + media + " .");
             }
-            catch
+            catch (Exception err)
             {
-                Cout("Erro na execução do exercício 1\n\n");
+                Cout("Entrada inválida.\n" + err.Message + "\n\n");
             }
+
             return;
         }
+
 
         static void Exercicio2()
         {
             Cout("Exercício 2\n\n");
-            Cout("Faça um programa que calcule a média de um conjunto de números digitados pelo usuário. O\r\nprograma deve permitir que o usuário digite uma quantidade não determinada de números,\r\nencerrando-se quando o usuário digitar um número negativo. Apresente a média aritmética dos\r\nnúmeros ao final da entrada de dados.");
+            Cout("2. Crie um programa que define um vetor de tamanho N, " +
+                "onde N é informado pelo usuário (você precisa garantir que o valor de N é maior que zero). " +
+                "Em seguida, faça a leitura dos N  números e mostre ao final apenas os números contidos no " +
+                "vetor que são maiores ou iguais à média de todos os números digitados.");
             Cout("\n\n");
+
             try
             {
-                double soma = 0, n = 0, count = 0;
-                int padding = 0;
-                string texto = "\nValor: ";
-                while (n >= 0)
+                int N = 0;
+                while (N <= 0)
                 {
-                    Console.Write(texto);
-                    n = Convert.ToDouble(Console.ReadLine());
-                    if (n >= 0) { 
-                        count++;
-                        soma += n;
-                        padding = n.ToString().Length;
-                        Console.SetCursorPosition(texto.Length + padding, Console.CursorTop - 1);
-                        for (int i = 0; i <= 40 - padding; i++)
-                        {
-                            Console.Write(" ");
-                        }
-                        Console.Write(" ... média parcial: " + (soma / count).ToString("N2"));
-                    }
-                    else
-                    {
-                        Console.SetCursorPosition(0, Console.CursorTop - 1);
-                        Console.Write("                                                                                                              \n");
-                    }
-
-
+                    if (N <= 0) Cout("\n\nO valor de N precisa ser maior que zero");
+                    Console.Write("Informe o valor de N - quantidade de números a serem inseridos no vetor: ");
+                    N = int.Parse(Console.ReadLine());
+                    //if (N < 0) throw new Exception(" vetor de tamanho zero ou negativo");
                 }
-                Cout("\nMédia dos valores inseridos = " + (soma / count).ToString("N2") + "\n\n");
+                float maior, menor, media, soma = 0;
+                float[] v = new float[N];
+                for (int i = 0; i < N; i++)
+                {
+                    Console.Write($"Entre o valor {i + 1}:      ");
+                    v[i] = float.Parse(Console.ReadLine());
+                    soma += v[i];
+                }
+                media = soma / N;
+                Console.Write("\n\nValores maiores que a média: \n[ ");
+                for (int i = 0; i < N; i++)
+                {
+                    if (v[i] >= media)
+                    {
+                        
+                        Console.Write(v[i] + ", ");
+                        
+                    }
+                }
 
+
+
+
+                Console.Write(" ]\n\n");
             }
-            catch
+            catch (Exception err)
             {
-                Cout("Entrada Inválida\n\n");
+                Cout("Entrada inválida.\n" + err.Message + "\n\n");
             }
+
             return;
         }
 
         static void Exercicio3()
         {
             Cout("Exercício 3\n\n");
-            Cout("Escreva um programa que mostre os números que possuem resto igual a 3 ou 5, quando divididos por 7. Considere o intervalo entre X e Y, incluindo os extremos. Os valores das variáveis X e Y são informados pelo usuário.");
+            Cout("3. Utilizando o exercício anterior, altere seu programa para que a inclusão dos números " +
+                "seja feita automaticamente. Pesquise por geração de números aleatórios em C#.");
             Cout("\n\n");
+
             try
             {
-                int x, y, t;
-                bool primeiro = true;
-                Console.Write("Informe o valor do início do intervalo: ");
-                x = int.Parse(Cin());
-                Console.Write("Informe o valor do final do intervalo: ");
-                y = int.Parse(Cin());
-                Cout("Valores válidos: ");
-                Console.Write("[ ");
-                for (int i = x; i <= y; i++)
+                int N = 0;
+                Random rd = new Random();
+                while (N <= 0)
                 {
-                    t = i % 7;
-                    if (t == 3 || t == 5)
+                    if (N <= 0) Cout("\n\nO valor de N precisa ser maior que zero");
+                    Console.Write("Informe o valor de N - quantidade de números a serem inseridos no vetor: ");
+                    N = int.Parse(Console.ReadLine());
+                    //if (N < 0) throw new Exception(" vetor de tamanho zero ou negativo");
+                }
+                float maior, menor, media;
+                double soma = 0;
+                float[] v = new float[N];
+                for (int i = 0; i < N; i++)
+                {
+                    v[i] = Convert.ToSingle(rd.NextDouble());
+                    soma += v[i];
+                }
+                media = Convert.ToSingle(soma / N);
+                Console.Write("\n\nValores maiores que a média: \n[ ");
+                for (int i = 0; i < N; i++)
+                {
+                    if (v[i] >= media)
                     {
-                        if (i > x && !primeiro) Console.Write(", ");
-                        Console.Write(i);
-                        primeiro = false;
+                        Console.Write(v[i] + " ;   ");
                     }
                 }
-                Console.Write(" ]\n\n\n");
+
+                Console.Write(" ]\n\n");
             }
-            catch
+            catch (Exception err)
             {
-                Cout("Entrada Inválida\n\n");
+                Cout("Entrada inválida.\n" + err.Message + "\n\n");
             }
+
+
             return;
         }
-
         static void Exercicio4()
         {
             Cout("Exercício 4\n\n");
-            Cout("Faça um programa que leia um número P positivo e mostre na tela os P^3 primeiros números pares que são ao mesmo tempo divisíveis por 4, mas não por 6.");
+            Cout("4. Utilizando o conceito de matrizes em C# codifique um jogo da velha.");
             Cout("\n\n");
+
+            string print_casa(int tipo)
+            {
+                if (tipo == 1)                
+                    return " O ";                
+                if (tipo == 2)                
+                    return " X ";                
+                return "   ";
+            }
+
+            void print_game(int[,] estado) {
+                Console.Clear();
+                int linha = 0;
+                char[] letra = new char[3]; letra[0] = 'A'; letra[1] = 'B'; letra[2] = 'C';
+                Console.WriteLine("    1     2     3");
+                for (int l = 0; l < 3; l++)
+                {
+                    Console.Write(letra[l] + "  ");
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Console.Write(print_casa(estado[l, i]));
+                        if (i == 0 || i == 1)
+                            Console.Write(" | ");
+                    }
+                    if (l == 0 || l == 1)
+                        Console.Write("\n--------------------");
+                    Console.Write("\n");
+                }
+            }
+
+            int[] pegar_escolha(string escolha)
+            {
+                int[] posicao = new int[2];
+                posicao[0] = posicao[1] = 0;
+                if (escolha.Length == 0 || escolha.Length > 2) throw new Exception("Opção inválida");//testar para ver se nao pega char de fim de linha
+                char linha = escolha.ToUpper()[0];
+                char coluna = escolha[1];
+                if (!(coluna == '1' || coluna == '2' || coluna == '3') || !(linha != 'A' || linha != 'B' || linha != 'C')) throw new Exception("Opção inválida");
+
+                switch (linha)
+                {
+                    case 'A':
+                        posicao[0] = 0;
+                        break;
+                    case 'B':
+                        posicao[0] = 1;
+                        break;
+                    case 'C':
+                        posicao[0] = 2;
+                        break;
+                }
+                switch (coluna)
+                {
+                    case '1':
+                        posicao[1] = 0;
+                        break;
+                    case '2':
+                        posicao[1] = 1;
+                        break;
+                    case '3':
+                        posicao[1] = 2;
+                        break;
+                }
+                return posicao;
+            }
+
+            int[] gerar_casa_random()
+            {
+                Random random = new Random();
+                int[] posicao = new int[2];
+                int rd = random.Next(0, 9);
+                posicao[0] = rd / 3;
+                posicao[1] = rd % 3;
+                return posicao;
+            }
+
+            bool escolha_e_invalida(int[] posicao, int[,] game)
+            {
+                return (game[posicao[0], posicao[1]] > 0);
+            }
+            int ha_vencedor(int[,] game)
+            {
+                bool teste;
+                for (int i = 0; i < 3; i++)
+                {
+                    teste = (game[i, 0] == game[i, 1]) && (game[i, 0] == game[i, 2]); // verificando linhas ==
+                    if (teste) return game[i, 0];
+                    teste = (game[0, i] == game[1, i]) && (game[0, i] == game[2, i]); // verificando colunas |||
+                    if (teste) return game[0, i];
+                }
+                teste = (game[0, 0] == game[1, 1]) && (game[0, 0] == game[2, 2]);//diagonal \
+                if (teste) return game[0, 0];
+                teste = (game[0, 2] == game[1, 1]) && (game[0, 2] == game[2, 0]);//diagonal /
+                if (teste) return game[0, 0];
+
+                return 0;
+            }
+
             try
             {
-                int p, p3;
-                Console.Write("Informe o valor de P: ");
-                p = int.Parse(Cin());
-                p3 = p*p*p; //  p3 =  Convert.ToInt32((Math.Pow(Convert.ToDouble(p),3.0)));
-                if (p > 0) {
-                    Console.SetCursorPosition(p.ToString().Length, Console.CursorTop - 1);
-                    Console.Write("    ... intervalo de 0 a " + p3 + "\n\n");
-                    Console.Write("\nvalores: [ ");
-                    for (int i = 0; i <= p3; i += 4)
+                int[,] game = new int[3, 3]; // 0 = vazio, 1 = O, 2 = X
+                for(int i = 0; i < 9; i++)
+                    game[i / 3, i % 3] = 0;
+                int casas_usadas = 0;
+                int vez = 0;
+
+                //System.Threading.Thread.Sleep(1000);
+
+                while (casas_usadas < 9 && ha_vencedor(game) == 0)
+                {
+                    bool escolha_invalida = true;
+                    int[] posicao = new int[2];
+                    string escolha;
+                    Console.Clear();
+                    print_game(game);
+
+                    if (vez % 2 == 0)
                     {
-                        if(! (i%6 == 0)){
-                            Console.Write(i);
-                            if (i < p3 - 4) Console.Write(", ");
+                        while (escolha_invalida)
+                        {
+                            for (int i = 0; i < 40; i++)
+                            {
+                                System.Threading.Thread.Sleep(5);
+                                Console.Write('<');
+                            }
+                            Console.Write("\n\nSua Vez. Escolha uma casa: ");
+                            escolha = Console.ReadLine();
+                            posicao = pegar_escolha(escolha);
+                            escolha_invalida = escolha_e_invalida(posicao, game);
+                            if (escolha_invalida)
+                            {
+                                Console.WriteLine("Escolha Inválida. A casa já está sendo usada. Tente outra...\n");
+                                System.Threading.Thread.Sleep(400);
+                                continue;
+                            }
                         }
+                        game[posicao[0], posicao[1]] = 1 + vez % 2;
+                        casas_usadas++;
+                        vez++;
+                        Console.WriteLine("OK...\n\n\n");
+                        System.Threading.Thread.Sleep(200);
                     }
-                    Console.Write(" ].\n\n");
-                }
-                else
-                {
-                    throw new Exception("valor não positivo");
-                }
-
-            }
-            catch(Exception er)
-            {
-                Cout("Entrada Inválida: " + er.Message + "\n\n");
-            }
-            return;
-        }
-
-        static void Exercicio5()
-        {
-            Cout("Exercício 5\n\n");
-            Cout("Crie um programa que seja capaz de apresentar uma figura similar à apresentada abaixo. O usuário entrará somente com o número de linhas e o caractere a ser utilizado na apresentação final. No exemplo, o número de linhas foi 5 e o caractere foi o asterisco: \n*\r\n**\r\n***\r\n****\r\n*****");
-            Cout("\n\n");
-            try
-            {
-                Console.Write("Informe o número de linhas :");
-                int linhas = Convert.ToInt32(Cin());
-                Console.Write("Informe o caracter escolhido :");
-                char caracter = Cin()[0];
-                string linha;
-                Cout("\n");
-
-                for (int i = 0 ; i < linhas; i++)
-                {
-                    linha = "";
-                    for (int j = linhas - i - 1 ; j < linhas; j++)
+                    else
                     {
-                        linha += caracter;
+                        if (vez >= 9) continue;
+                        Console.WriteLine($"Minha vez...\n\n");
+                        for (int i = 0; i < 40; i++)
+                        {
+                            System.Threading.Thread.Sleep(8);
+                            Console.Write('>');
+                        }
+                        do {
+                            posicao = gerar_casa_random();
+                        } while (escolha_e_invalida(posicao, game));
+                        game[posicao[0], posicao[1]] = 1 + vez % 2;
+                        casas_usadas++;
+                        vez++;
                     }
-                    Cout(linha);
                 }
 
-                Cout("\n\n");
 
-            }
-            catch
-            {
-                Cout("Entrada Inválida\n\n");
-            }
-            return;
-        }
+                Console.Clear();
+                print_game(game);
 
-        static void Exercicio6()
-        {
-            Cout("Exercício 6\n\n");
-            Cout("Crie um programa que seja capaz de apresentar uma figura similar à apresentada abaixo. O usuário entrará somente com o número de linhas e o caractere a ser utilizado na apresentação final. No exemplo, o número de linhas foi 5 e o caractere foi o asterisco.\n   *\n  ***\n *****\n*******\n\n");
-            Cout("\n\n");
-            try
-            {
-                Console.Write("Informe o número de linhas :");
-                int linhas = Convert.ToInt32(Cin());
-                Console.Write("Informe o caracter escolhido :");
-                char caracter = Cin()[0];
-                string linha;
-                Cout("\n");
-
-                for (int i = 0; i < linhas; i++)
+                for (int i = 0; i < 40; i++)
                 {
-                    linha = "";
-                    for (int k = 0; k <= linhas - i - 2; k++)
-                    {
-                        linha += " ";
-                    }
-                    for (int j = 0; j < (i+1)*2-1; j++)
-                    {                       
-                        linha += caracter;
-                    }
-                    Cout(linha);
+                    System.Threading.Thread.Sleep(5);
+                    Console.Write('=');
                 }
-                Cout("\n\n");
+                System.Threading.Thread.Sleep(300);
+                int vencedor = ha_vencedor(game);
+                Console.WriteLine("\n\n");
+                switch (vencedor)
+                {
+                    case 0: 
+                        Console.WriteLine("Ninguém ganhou");
+                        break;
+                    case 1: 
+                        Console.WriteLine("Parabéns! Você ganhou");
+                        break;
+                    case 2: 
+                        Console.WriteLine("Você perdeu!");
+                        break;
+                }
+                System.Threading.Thread.Sleep(2800);
+
+
+
+
+
+
             }
-            catch
+            catch(Exception error)
             {
-                Cout("Entrada Inválida\n\n");
+                Console.WriteLine("erro" + error.Message);
             }
+
+
+
+
+
             return;
         }
-
 
 
         static void Main(string[] args)
         {
-
-            bool opcao_valida = false, sair = false;
+            bool escolhendo_opcao = true;
+            bool opcao_valida = false;
             string opcao = "";
-            Cout("LISTA 2\n\n");
-            while (!sair)
-            {   
-                opcao = Cin("Informe a opção número do exercício para executar (de 1 a 6) ou escreva <sair> para terminar o programa.\nOpção: ");
-                if (opcao.ToLower() == "sair" || opcao.ToLower() == "<sair>")
-                {
-                    sair = true;
-                    Environment.Exit(0);
-                }
+            Cout("Lista 3\n\n");
+            while (true)
+            {
+                int programa_inicial = 1, programa_final = 4;
+                opcao = Cin("Selecione o número do exercício para executar (de " +
+                    programa_inicial + " a " + programa_final +
+                    ") ou escreva <sair> para terminar o programa:  ");
+                if (opcao.ToLower() == "sair" || opcao.ToLower() == "<sair>") break;
                 try
                 {
                     int numero = Convert.ToInt32(opcao);
-                    opcao_valida = (numero >= 1 && numero <= 12);
+                    opcao_valida = (numero >= 1 && numero <= 4);
                     if (!opcao_valida)
                     {
+                        Cout("\n\nOpcao Invalida\n\n");
+                        Cin("\n\n\nPrecione qualquer tecla para voltar ao menu...");
                         System.Console.Clear();
-                        Cout("Opção Inválida\n\n\n");
                         continue;
+
                     }
                     else
                     {
+                        switch (opcao)
+                        {
+                            case "1":
+                                Exercicio1();
+                                break;
+                            case "2":
+                                Exercicio2();
+                                break;
+                            case "3":
+                                Exercicio3();
+                                break;
+                            case "4":
+                                Exercicio4();
+                                break;
+                        }
+                        Cin("\n\n\nPrecione qualquer tecla para voltar ao menu...");
                         System.Console.Clear();
                     }
                 }
@@ -290,33 +420,13 @@ namespace Lista2
                 {
                     System.Console.Clear();
                     Cout("Opcao Invalida\n\n\n");
-                    continue;
                 }
-                switch (opcao)
-                {
-                    case "1":
-                        Exercicio1();
-                        break;
-                    case "2":
-                        Exercicio2();
-                        break;
-                    case "3":
-                        Exercicio3();
-                        break;
-                    case "4":
-                        Exercicio4();
-                        break;
-                    case "5":
-                        Exercicio5();
-                        break;
-                    case "6":
-                        Exercicio6();
-                        break;
-                }
-                Cin("Precione qualquer tecla para voltar ao menu...");
-                System.Console.Clear();
             }
-            Cin("Precione qualquer tecla para fechar...");
+
+
+            Cin("\n\n\nPrecione qualquer tecla para fechar...");
         }
     }
 }
+
+
